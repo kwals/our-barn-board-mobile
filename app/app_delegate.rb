@@ -4,10 +4,12 @@ class AppDelegate
     rootViewController.title = 'FunColor'
     rootViewController.view.backgroundColor = UIColor.whiteColor
 
-    navigationController = UINavigationController.alloc.initWithRootViewController(rootViewController)
+    @search_controller = SearchController.alloc.initWithNibName(nil, bundle:nil)
+    @navigation_controller = 
+        UINavigationController.alloc.initWithRootViewController(@search_controller)
 
     @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
-    @window.rootViewController = navigationController
+    @window.rootViewController = @navigation_controller
     @window.makeKeyAndVisible
 
     true
