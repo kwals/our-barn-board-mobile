@@ -10,6 +10,15 @@ class Color
     }
   end
 
+  def self.find(hex, &block)
+    # NEED TO USE NSURLSession!
+    this_api = API.new("http://www.colr.org/json/color/")
+    this_api.get(hex.to_s) do |response|
+       p response.data.to_s
+       block.call(nil)
+     end
+  end
+
   def tags
     @tags ||=[]
   end
@@ -20,7 +29,7 @@ class Color
     end
     tags.each { |tag| 
       if not tag.is_a? Tag 
-        raise "Wrong class for atttempted tag #{tag.inspect}"
+        raise "Wrong class for attempted tag #{tag.inspect}"
       end
     }
     @tags = tags
