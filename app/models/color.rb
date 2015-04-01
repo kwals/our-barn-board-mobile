@@ -11,7 +11,6 @@ class Color
   end
 
   def self.find(hex, &block)
-    # NEED TO USE NSURLSession!
     this_api = API.new("http://www.colr.org/json/color/")
     this_api.get(hex.to_s) do |response|
        p response.data.to_s
