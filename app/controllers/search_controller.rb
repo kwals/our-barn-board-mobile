@@ -1,4 +1,8 @@
 class SearchController < UIViewController
+   def open_color(color)
+      p "Opening #{color.inspect}"
+  end
+  
   def viewDidLoad
     super
     self.title = "Find color!"
@@ -31,9 +35,17 @@ class SearchController < UIViewController
       hex = hex[1..-1] if hex[0]=="#"
 
       Color.find(hex) do |color|
+        if color.nil?
+          @search.setTitle("None, sorry.", forState: UIControlStateNormal)
+        else
+          @search.setTitle("Seearch", forState: UIControlStateNormal)
+          self.open_color(color)
+        end
         @search.enabled = true
         @text_field.enabled = true
       end
-    end
+
+   
+  end
   end
 end

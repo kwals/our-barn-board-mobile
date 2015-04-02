@@ -43,6 +43,10 @@ private
     NSJSONSerialization.dataWithJSONObject(params, options: 0, error: nil)
   end
 
+  def convert_from_json(params)
+    # make a function that allows me deserialize the json into a NSObject 
+  end
+
   def create_task(request, &block)
     if block_given?
       session.dataTaskWithRequest(request, completionHandler: -> (data,response, error) {
