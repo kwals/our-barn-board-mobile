@@ -28,8 +28,11 @@ private
   def create_request(path, method)
     url = NSURL.URLWithString(@base_url + path)
     request = NSMutableURLRequest.requestWithURL(url)
+    request.addValue("token PUT MY TOKEN HERE", forHTTPHeaderField: "Authorization")
+    request.addValue("kwals", forHTTPHeaderField: "User-Agent")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("application/json", forHTTPHeaderField: "Accept")
+    # # Tried putting Github Authorization here. Didn't work. How to add headers?
     request.setHTTPMethod(method.to_s.upcase)
     request
   end
@@ -43,13 +46,13 @@ private
     NSJSONSerialization.dataWithJSONObject(params, options: 0, error: nil)
   end
 
-  def convert_from_json(params)
-    # make a function that allows me deserialize the json into a NSObject 
-  end
-
   def create_task(request, &block)
     if block_given?
       session.dataTaskWithRequest(request, completionHandler: -> (data,response, error) {
+        if error 
+          puts error
+          puts error.message
+        end
         block.call(APIResponse.new(data, response, error))
         })
     else

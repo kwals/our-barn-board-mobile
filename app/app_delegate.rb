@@ -12,6 +12,8 @@ class AppDelegate
     @window.rootViewController = @navigation_controller
     @window.makeKeyAndVisible
 
+    Color.find("rate_limit")
+
     true
   end
 end
