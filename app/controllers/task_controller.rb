@@ -57,12 +57,14 @@ class TaskController < UITableViewController
   end
 
   def tableView(tableView, cellForRowAtIndexPath:indexPath)
+
   
     @reuseIdentifier ||= "CELL_IDENTIFIER"
     cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifer) || begin 
       UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:@reuseIdentifer)
     end
     cell.textLabel.text = @tasks[indexPath.row].horse_name
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator
     cell
   end
 
@@ -71,6 +73,5 @@ class TaskController < UITableViewController
     detail_controller.task = @tasks[indexPath.row]
     self.navigationController.pushViewController(detail_controller, animated:true)
   end
-
 
 end

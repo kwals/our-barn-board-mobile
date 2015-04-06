@@ -2,6 +2,7 @@ class AboutController < UIViewController
   def init
     if super
       self.tabBarItem.title = "About"
+      self.tabBarItem.image = UIImage.imageNamed('FirstTab.png')
     end
     super
   end
