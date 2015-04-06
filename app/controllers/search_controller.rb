@@ -27,6 +27,11 @@ class SearchController < UIViewController
       @text_field.center.y + 40]
     self.view.addSubview(@search)
 
+    label = UILabel.new
+    label.text = "GitHub Checker"
+    label.frame = [[20,100],[280,30]]
+
+
     @search.when(UIControlEventTouchUpInside) do 
       @search.enabled = false 
       @text_field.enabled = false
@@ -34,16 +39,21 @@ class SearchController < UIViewController
       hex = @text_field.text
       hex = hex[1..-1] if hex[0]=="#"
 
+      def display_results(color)
+        p "#{color}"
+      end
+
       Color.find(hex) do |color|
         if color.nil?
           @search.setTitle("None, sorry.", forState: UIControlStateNormal)
         else
           @search.setTitle("Seearch", forState: UIControlStateNormal)
-          self.open_color(color)
+          self.display_results(color)
         end
         @search.enabled = true
         @text_field.enabled = true
       end
+
 
    
   end

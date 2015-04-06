@@ -17,6 +17,7 @@ class Color
       puts response.data
       puts response.data.class
       puts response
+      response.data
      end
   end
 

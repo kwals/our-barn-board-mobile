@@ -28,11 +28,10 @@ private
   def create_request(path, method)
     url = NSURL.URLWithString(@base_url + path)
     request = NSMutableURLRequest.requestWithURL(url)
-    request.addValue("token PUT MY TOKEN HERE", forHTTPHeaderField: "Authorization")
+    request.addValue("token MYTOKEN", forHTTPHeaderField: "Authorization")
     request.addValue("kwals", forHTTPHeaderField: "User-Agent")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("application/json", forHTTPHeaderField: "Accept")
-    # # Tried putting Github Authorization here. Didn't work. How to add headers?
     request.setHTTPMethod(method.to_s.upcase)
     request
   end
