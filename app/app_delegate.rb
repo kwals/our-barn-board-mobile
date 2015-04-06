@@ -1,9 +1,14 @@
 class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
-     @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
-      @window.rootViewController = TaskController.alloc.initWithStyle(UITableViewStylePlain)
-      @window.rootViewController.wantsFullScreenLayout = true
+     @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
       @window.makeKeyAndVisible
+      about_tab = UINavigationController.alloc.initWithRootViewController(AboutController.alloc.init)
+      task_tab = UINavigationController.alloc.initWithRootViewController(TaskController.alloc.initWithStyle(UITableViewStylePlain))
+      task_tab.tabBarItem = UITabBarItem.alloc.initWithTabBarSystemItem(UITabBarSystemItemSearch, tag:1)
+      @tabbar = UITabBarController.alloc.init 
+      @tabbar.viewControllers = [task_tab, about_tab]
+      @tabbar.wantsFullScreenLayout = true
+      @window.rootViewController = @tabbar 
       true
 
 

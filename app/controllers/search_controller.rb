@@ -27,11 +27,6 @@ class SearchController < UIViewController
       @text_field.center.y + 40]
     self.view.addSubview(@search)
 
-    label = UILabel.new
-    label.text = "GitHub Checker"
-    label.frame = [[20,100],[280,30]]
-
-
     @search.when(UIControlEventTouchUpInside) do 
       @search.enabled = false 
       @text_field.enabled = false
