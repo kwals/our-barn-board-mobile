@@ -3,15 +3,18 @@ class TaskController < UITableViewController
   def viewDidLoad
     super
 
-    @task1 = Task.new({'horse_id' => 2, 
+    @task1 = Task.new({'id' => 3,
+      'horse_id' => 2, 
       'horse_name' => 'Henry',
       'description' => 'One flake of alfalfa hay with two scoops of grain',
       'kind' => 'morning'})
-    @task2 = Task.new({'horse_id' => 3,
+    @task2 = Task.new({'id' => 2,
+      'horse_id' => 3,
       'horse_name' => 'Ruby',
       'description' => 'One flake of regular hay, no grain.',
       'kind' => 'morning'})
-    @task3 = Task.new({'horse_id' => 6,
+    @task3 = Task.new({'id' => 1,
+      'horse_id' => 6,
       'horse_name' => 'Charlie',
       'description' => 'Put out into field.',
       'kind' => 'morning'})

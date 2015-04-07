@@ -39,6 +39,14 @@ class DetailController < UIViewController
 
 
     def create_complete
+
       puts "And then you would create a complete, of course!"
+      that = API.new('http://localhost:3000')
+      that.post("/routines/#{@task.id}/completes")
+
+
+
+      # routine_completes 
+                         # POST   /routines/:routine_id/completes(.:format)     completes#create
     end
 end

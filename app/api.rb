@@ -8,9 +8,9 @@ class API
     create_task(request, &block).resume
   end
 
-  def post(path, params, &block)
+  def post(path, &block)
     request = create_request(path, :post)
-    add_params(request, params)
+    # add_params(request, params)
     create_task(request, &block).resume
   end
 
