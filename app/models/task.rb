@@ -1,5 +1,7 @@
 class Task
-attr_accessor :id, :horse_id, :horse_name, :description, :kind
+PROPERTIES = [:id, :horse_id, :horse_name, :description, :kind]
+attr_accessor *PROPERTIES
+
   def initialize(task)
     @id = task["id"]
     @horse_id = task['horse_id']

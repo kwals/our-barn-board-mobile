@@ -3,7 +3,7 @@ class API
     @base_url = base_url
   end
 
-  def get(path = "test", &block)
+  def get(path = "/routines", &block)
     request = create_request(path, :get)
     create_task(request, &block).resume
   end
@@ -18,7 +18,6 @@ private
   
   def config
     NSURLSessionConfiguration.defaultSessionConfiguration
-    # how can I change configuration here?
   end
 
   def session
@@ -28,8 +27,8 @@ private
   def create_request(path, method)
     url = NSURL.URLWithString(@base_url + path)
     request = NSMutableURLRequest.requestWithURL(url)
-    # request.addValue("token MYTOKEN", forHTTPHeaderField: "Authorization")
-    # request.addValue("kwals", forHTTPHeaderField: "User-Agent")
+    request.addValue("tokenhere", forHTTPHeaderField: "X-USER-TOKEN")
+    request.addValue("bob@example.com", forHTTPHeaderField: "X-USER-EMAIL")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("application/json", forHTTPHeaderField: "Accept")
     request.setHTTPMethod(method.to_s.upcase)

@@ -2,66 +2,40 @@ class TaskController < UITableViewController
 
   def viewDidLoad
     super
-
-    @task1 = Task.new({'id' => 3,
-      'horse_id' => 2, 
-      'horse_name' => 'Henry',
-      'description' => 'One flake of alfalfa hay with two scoops of grain',
-      'kind' => 'morning'})
-    @task2 = Task.new({'id' => 2,
-      'horse_id' => 3,
-      'horse_name' => 'Ruby',
-      'description' => 'One flake of regular hay, no grain.',
-      'kind' => 'morning'})
-    @task3 = Task.new({'id' => 1,
-      'horse_id' => 6,
-      'horse_name' => 'Charlie',
-      'description' => 'Put out into field.',
-      'kind' => 'morning'})
-    @tasks = [@task1,@task2,@task3]
-  
-    # @tasks = NSMutableArray.new
-    # # @tasks = []
-    #  ^should i add ||= to these? is that why the name disappear? 
-    # this_api = API.new("http://localhost:3000/")
-    # this_api.get do |response|
-    #   response.data.each do |hash|
-
-    #     # For reasons I have yet to understand
-    #     # It will not pass the hash to initialize, I have to do it here
-    #     # Working on figuring out why.
-      #   #Also, this does not work consistently. 
-
-    #     t = Task.new({'horse_id' => hash['horse_id'], 
-    #    'horse_name' => hash['horse_name'],
-    #    'description' => hash['description'],
-    #    'kind' => hash['morning']})
-    #     puts t.horse_name
-    #     @tasks.push(t)
-    #   end
-    #   puts @tasks
-    #   @tasks
-    # end
-
-
-    # @tasks = NSMutableArray.alloc.initWithContentsOfURL("http://localhost:3000/test")
-    # ^this doesn't work because the string is not an instance of NSURL
-
     view.backgroundColor = UIColor.whiteColor
     @myTableView = UITableView.alloc.initWithFrame(view.bounds, style:UITableViewStylePlain)
     @myTableView.dataSource = self
     @myTableView.delegate = self
 
     view.addSubview(@myTableView)
+    self.title = "Horses to Feed"
+  
+    @tasks ||= NSMutableArray.new
+
+    this_api = API.new("http://localhost:3000/api")
+    this_api.get do |response|
+      if response.data
+        response.data.each do |hash|
+          @t = Task.new({'id' => hash[:id],
+            'horse_id' => hash[:horse_id],
+            'horse_name' => hash[:horse_name],
+            'description' => hash[:description],
+            'kind' => hash[:kind]})
+          @tasks.push(@t)
+        end
+        @tasks
+      end
+      @tasks
+      @myTableView.reloadData
+    end
   end
 
   def tableView(tableView, numberOfRowsInSection:section)
+    puts @tasks.count
     @tasks.count
   end
 
   def tableView(tableView, cellForRowAtIndexPath:indexPath)
-
-  
     @reuseIdentifier ||= "CELL_IDENTIFIER"
     cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifer) || begin 
       UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:@reuseIdentifer)

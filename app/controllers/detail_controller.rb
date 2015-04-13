@@ -5,48 +5,44 @@ class DetailController < UIViewController
       show_task_detail
     end
 
+    def create_complete
+      that = API.new('http://localhost:3000/api')
+      that.post("/routines/#{@task.id}/completes")
+    end
+
     def show_task_detail
       label = UILabel.alloc.init
-      label.frame = [[200, 45], [300, 60]]
+      label.frame = [[50, 50], [160, 50]]
       label.backgroundColor = UIColor.clearColor
       label.text = @task.horse_name
+      label.center = [
+      self.view.frame.size.width / 2,
+      self.view.frame.size.height / 2 - 250]
       view.addSubview(label)
 
-      image = UIImage.alloc.initWithData(NSData.alloc.initWithContentsOfURL(NSURL.URLWithString("http://www.tbheritage.com/Portraits/Mowf/MowWarAdmiral.jpg")))
-      view.addSubview(UIImageView.alloc.initWithImage(image))
+      # image = UIImage.alloc.initWithData(NSData.alloc.initWithContentsOfURL(NSURL.URLWithString("http://www.tbheritage.com/Portraits/Mowf/MowWarAdmiral.jpg")))
+      # view.addSubview(UIImageView.alloc.initWithImage(image))
 
       label2 = UILabel.alloc.init
-      label2.frame = [[20, 100], [300,30]]
+      label2.frame = [[5, 25], [200, 200]]
       label2.backgroundColor = UIColor.clearColor
       label2.text = @task.description
+      label2.center = [
+      self.view.frame.size.width / 2,
+      self.view.frame.size.height / 2 - 200]
       view.addSubview(label2)
 
       button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
       button.sizeToFit
-      button.frame = [[150,150],[300,300]]
+      button.frame = [[100,100],[250,250]]
       button.setTitle("I have fed #{@task.horse_name}", forState:UIControlStateNormal)
       button.setTitle("Done", forState:UIControlStateHighlighted)
       button.setTitle(self, action:'buttonIsPressed', forControlEvents:UIControlEventTouchDown)
       button.addTarget(
         self, action:"create_complete", forControlEvents:UIControlEventTouchUpInside)
       view.addSubview(button)
-      # I will probably also need to add if/else logic so that the button is ONLY shown if the horse has not been fed.
-      # Here I need to put a button on the screen that will send a post request to the proper route
-      # I will also need to make sure that the @task knows about it's routine id - that will be vital for getting the route correct
-      # THen I will probably add a function that allows me to make an outgoing call to the right place to create a complete
-    
+
+# Add button here to call owner in case of a problem
     end
 
-
-    def create_complete
-
-      puts "And then you would create a complete, of course!"
-      that = API.new('http://localhost:3000')
-      that.post("/routines/#{@task.id}/completes")
-
-
-
-      # routine_completes 
-                         # POST   /routines/:routine_id/completes(.:format)     completes#create
-    end
 end
