@@ -8,6 +8,8 @@ class DetailController < UIViewController
     def create_complete
       that = API.new('http://localhost:3000/api')
       that.complete("/routines/#{@task.id}/completes")
+      # self.navigationController(popViewController, animated: true)
+      self.navigationController.popViewControllerAnimated(true)
     end
 
     def show_task_detail
@@ -19,9 +21,6 @@ class DetailController < UIViewController
       self.view.frame.size.width / 2,
       self.view.frame.size.height / 2 - 250]
       view.addSubview(label)
-
-      # image = UIImage.alloc.initWithData(NSData.alloc.initWithContentsOfURL(NSURL.URLWithString("http://www.tbheritage.com/Portraits/Mowf/MowWarAdmiral.jpg")))
-      # view.addSubview(UIImageView.alloc.initWithImage(image))
 
       label2 = UILabel.alloc.init
       label2.frame = [[5, 25], [200, 200]]
