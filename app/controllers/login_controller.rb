@@ -1,5 +1,20 @@
 class LoginController < UIViewController
 
+  def get_auth_token(user_email ="bob@example.com", user_password = "password")
+    @defaults = NSUserDefaults.standardUserDefaults
+    that = API.new('http://localhost:3000/api/')
+    that.post("/sessions", {"user" => {"email" => user_email, "password" => user_password}}) do |response|
+        hash = response.data
+        puts response.data
+        @defaults["email"] = hash["user_email"]
+        @defaults["token"] = hash["authentication_token"]
+
+    end
+    puts @defaults["email"]
+    puts @defaults["token"]
+    return true
+  end
+
   def viewDidLoad
     super
     self.title = "Login to OurBarnBoard"
@@ -41,12 +56,24 @@ class LoginController < UIViewController
       @email_field.enabled = false
       @password_field.enabled = false 
 
-      # SO here I need add the logic to send the login information to the rails API
-      # Get credentials and store them....somewhere
-      # 
+      user_email = @email_field.text
+      user_password = @password_field.text
+      self.get_auth_token(user_email, user_password)
 
-      # hex = @text_field.text
-      # hex = hex[1..-1] if hex[0]=="#"
+# What to do now? Alert view?
+# How to redirect?
+       # do |token|
+      #   if token
+      #     @email_field.setTitle("your emal")
+      #     @password_field.setTitle("hunter2")
+      #     self.proceed_with_login
+      #   else
+      #     @email_field.setTitle("Not found", forState: UIControlStateNormal)
+      #     @password_field.setTitle("Notfoind", forState: UIControlStateNormal)
+      #   end
+      #   @email_field = true
+      #   @password_field = true
+      # end
 
       # def display_results(color)
       #   p "#{color}"
@@ -63,6 +90,18 @@ class LoginController < UIViewController
       #   @text_field.enabled = true
       # end
      end
+
   end
-  
+
+
+
+      # button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+      # button.sizeToFit
+      # button.frame = [[100,200],[250,250]]
+      # button.setTitle("Get auth!", forState:UIControlStateNormal)
+      # button.setTitle("Done", forState:UIControlStateHighlighted)
+      # button.setTitle(self, action:'buttonIsPressed', forControlEvents:UIControlEventTouchDown)
+      # button.addTarget(
+      #   self, action:"get_auth_token", forControlEvents:UIControlEventTouchUpInside)
+      # self.view.addSubview(button)
 end

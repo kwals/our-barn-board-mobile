@@ -7,7 +7,7 @@ class DetailController < UIViewController
 
     def create_complete
       that = API.new('http://localhost:3000/api')
-      that.post("/routines/#{@task.id}/completes")
+      that.complete("/routines/#{@task.id}/completes")
     end
 
     def show_task_detail

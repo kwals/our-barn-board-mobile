@@ -1,16 +1,22 @@
 class API
+
   def initialize(base_url)
     @base_url = base_url
   end
 
-  def get(path = "/routines", &block)
+  def get(path, &block)
     request = create_request(path, :get)
     create_task(request, &block).resume
   end
 
-  def post(path, &block)
+  def complete(path, &block)
     request = create_request(path, :post)
-    # add_params(request, params)
+    create_task(request, &block).resume
+  end
+
+  def post(path, *params, &block)
+    request = get_token(path, :post)
+    add_params(request, params)
     create_task(request, &block).resume
   end
 
@@ -27,8 +33,20 @@ private
   def create_request(path, method)
     url = NSURL.URLWithString(@base_url + path)
     request = NSMutableURLRequest.requestWithURL(url)
-    request.addValue("tokenhere", forHTTPHeaderField: "X-USER-TOKEN")
-    request.addValue("bob@example.com", forHTTPHeaderField: "X-USER-EMAIL")
+    @defaults = NSUserDefaults.standardUserDefaults
+    request.addValue(@defaults["token"], forHTTPHeaderField: "X-USER-TOKEN")
+    request.addValue(@defaults["email"], forHTTPHeaderField: "X-USER-EMAIL")
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.addValue("application/json", forHTTPHeaderField: "Accept")
+    request.setHTTPMethod(method.to_s.upcase)
+    puts request
+    request
+  end
+
+
+  def get_token(path, method)
+    url = NSURL.URLWithString(@base_url + path)
+    request = NSMutableURLRequest.requestWithURL(url)
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("application/json", forHTTPHeaderField: "Accept")
     request.setHTTPMethod(method.to_s.upcase)

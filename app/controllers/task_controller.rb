@@ -13,15 +13,15 @@ class TaskController < UITableViewController
     @tasks ||= NSMutableArray.new
 
     this_api = API.new("http://localhost:3000/api")
-    this_api.get do |response|
+    this_api.get("/routines") do |response|
       if response.data
         response.data.each do |hash|
-          @t = Task.new({'id' => hash[:id],
+          t = Task.new({'id' => hash[:id],
             'horse_id' => hash[:horse_id],
             'horse_name' => hash[:horse_name],
             'description' => hash[:description],
             'kind' => hash[:kind]})
-          @tasks.push(@t)
+          @tasks.push(t)
         end
         @tasks
       end
