@@ -34,6 +34,7 @@ class LoginController < UIViewController
     # So Here I'm going to need another text field for the password
     @password_field = UITextField.alloc.initWithFrame [[50,25], [160,26]]
     @password_field.placeholder = "********"
+    @password_field.secureTextEntry = true
     @password_field.textAlignment = UITextAlignmentCenter
     @password_field.autocapitalizationType = UITextAutocapitalizationTypeNone
     @password_field.borderStyle = UITextBorderStyleRoundedRect 
@@ -59,49 +60,11 @@ class LoginController < UIViewController
       user_email = @email_field.text
       user_password = @password_field.text
       self.get_auth_token(user_email, user_password)
-
-# What to do now? Alert view?
-# How to redirect?
-       # do |token|
-      #   if token
-      #     @email_field.setTitle("your emal")
-      #     @password_field.setTitle("hunter2")
-      #     self.proceed_with_login
-      #   else
-      #     @email_field.setTitle("Not found", forState: UIControlStateNormal)
-      #     @password_field.setTitle("Notfoind", forState: UIControlStateNormal)
-      #   end
-      #   @email_field = true
-      #   @password_field = true
-      # end
-
-      # def display_results(color)
-      #   p "#{color}"
-      # end
-
-      # Color.find(hex) do |color|
-      #   if color.nil?
-      #     @search.setTitle("None, sorry.", forState: UIControlStateNormal)
-      #   else
-      #     @search.setTitle("Seearch", forState: UIControlStateNormal)
-      #     self.display_results(color)
-      #   end
-      #   @search.enabled = true
-      #   @text_field.enabled = true
-      # end
+      # task_controller = TaskController.alloc.init
+      # self.navigationController.pushViewController(task_controller, animated:true)
      end
 
   end
 
 
-
-      # button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
-      # button.sizeToFit
-      # button.frame = [[100,200],[250,250]]
-      # button.setTitle("Get auth!", forState:UIControlStateNormal)
-      # button.setTitle("Done", forState:UIControlStateHighlighted)
-      # button.setTitle(self, action:'buttonIsPressed', forControlEvents:UIControlEventTouchDown)
-      # button.addTarget(
-      #   self, action:"get_auth_token", forControlEvents:UIControlEventTouchUpInside)
-      # self.view.addSubview(button)
 end

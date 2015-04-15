@@ -8,7 +8,7 @@ class TaskController < UITableViewController
     @myTableView.delegate = self
 
     view.addSubview(@myTableView)
-    self.title = "Horses to Feed"
+    self.title = "Horses"
   
     @tasks ||= NSMutableArray.new
 
