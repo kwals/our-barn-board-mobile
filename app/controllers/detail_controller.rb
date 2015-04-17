@@ -6,7 +6,7 @@ class DetailController < UIViewController
     end
 
     def create_complete
-      that = API.new('http://localhost:3000/api')
+      that = API.new('https://ourbarnboard.herokuapp.com/api')
       that.complete("/routines/#{@task.id}/completes")
           a = UIAlertView.new
           a.title = "Thanks for feeding #{task.horse_name}!"

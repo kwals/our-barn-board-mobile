@@ -12,9 +12,10 @@ class TaskController < UITableViewController
   
     @tasks ||= NSMutableArray.new
 
-    this_api = API.new("http://localhost:3000/api")
+    this_api = API.new("https://ourbarnboard.herokuapp.com/api")
     this_api.get("/routines") do |response|
-      if response.data
+      puts response.data
+      if response.success
         response.data.each do |hash|
           t = Task.new({'id' => hash[:id],
             'horse_id' => hash[:horse_id],

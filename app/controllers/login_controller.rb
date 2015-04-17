@@ -1,26 +1,22 @@
 class LoginController < UIViewController
-
+# api links
   def get_auth_token(user_email ="bob@example.com", user_password = "password")
     @defaults = NSUserDefaults.standardUserDefaults
-    that = API.new('http://localhost:3000/api/')
-    that.post("/sessions", {"user" => {"email" => user_email, "password" => user_password}}) do |response|
+    that = API.new('https://ourbarnboard.herokuapp.com/api')
+    that.post("/sessions?user[email]=#{user_email}&user[password]=#{user_password}") do |response|
         hash = response.data
-        puts response.data
         @defaults["email"] = hash["user_email"]
         @defaults["token"] = hash["authentication_token"]
-
     end
-    puts @defaults["email"]
-    puts @defaults["token"]
     return true
   end
+
 
   def viewDidLoad
     super
     self.title = "Login to OurBarnBoard"
     self.view.backgroundColor = UIColor.whiteColor
 
-    # Turn this in the email login field
     @email_field = UITextField.alloc.initWithFrame [[50,50], [160,26]]
     @email_field.placeholder = "you@email.com"
     @email_field.textAlignment = UITextAlignmentCenter
@@ -31,7 +27,6 @@ class LoginController < UIViewController
       self.view.frame.size.height / 2 - 150]
     self.view.addSubview(@email_field)
 
-    # So Here I'm going to need another text field for the password
     @password_field = UITextField.alloc.initWithFrame [[50,25], [160,26]]
     @password_field.placeholder = "********"
     @password_field.secureTextEntry = true
@@ -60,8 +55,8 @@ class LoginController < UIViewController
       user_email = @email_field.text
       user_password = @password_field.text
       self.get_auth_token(user_email, user_password)
-      # task_controller = TaskController.alloc.init
-      # self.navigationController.pushViewController(task_controller, animated:true)
+      task_controller = TaskController.alloc.init
+      self.navigationController.pushViewController(task_controller, animated:true)
      end
 
   end

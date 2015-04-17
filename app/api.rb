@@ -14,9 +14,9 @@ class API
     create_task(request, &block).resume
   end
 
-  def post(path, *params, &block)
+  def post(path, &block)
     request = get_token(path, :post)
-    add_params(request, params)
+    # add_params(request, params)
     create_task(request, &block).resume
   end
 
@@ -47,7 +47,7 @@ private
   def get_token(path, method)
     url = NSURL.URLWithString(@base_url + path)
     request = NSMutableURLRequest.requestWithURL(url)
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    # request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("application/json", forHTTPHeaderField: "Accept")
     request.setHTTPMethod(method.to_s.upcase)
     request
@@ -56,6 +56,7 @@ private
   def add_params(request, params)
     data = create_json_data(params)
     request.setHTTPBody(data)
+
   end
 
   def create_json_data(params)
@@ -80,7 +81,8 @@ private
     attr_reader :success, :data, :error
 
     def initialize(data, response, error)
-      @success = (200..299).include?(response.statusCode)
+      q = response.statusCode.to_i
+      @success = (200..299).include?(q)
       @data = NSJSONSerialization.JSONObjectWithData(data, options: 0, error: nil)
       @error = error
     end
